@@ -1,3 +1,5 @@
+//By Oliver Pelly
+
 public class Body {
 
     public static final double G = 6.673e-11;
