@@ -93,8 +93,14 @@ public class Body {
         this.fy = netYForce;
     }
 
-    public void updateVelocity(){
+    public void updateVelocity(double timeslice){
         // TODO: Implament updateVelocity
+        
+    }
+
+    public void updatePosition(double timeslice){
+        // TODO: Implament updatePosition
+
     }
 
     public double getXpos(){
