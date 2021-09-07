@@ -59,14 +59,14 @@ public class Space {
 
         Canvas canvas = new Canvas( (int) this.height, (int) this.width, 255,255,255,255);
         for(int i = 0; i < this.bodies.length; i ++){
-            canvas.drawSquare(5, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 0, 0, 0, 255);
+            canvas.drawSquare(5, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 255, 255, 255, 255);
         }
 
         File f = null;
         try{
             String frameNumberStr = String.valueOf(frameNumber);
             frameNumberStr = frameNumberStr + ".png";
-            f = new File(frameNumberStr);
+            f = new File("frames/" + frameNumberStr);
             ImageIO.write(canvas.image, "png", f);
         }catch(IOException e){
             System.out.println("Error: " + e);
