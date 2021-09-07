@@ -1,4 +1,8 @@
 import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
 
 public class Space {
 
@@ -51,6 +55,24 @@ public class Space {
         canvas.display();
     }
 
+    public void save(int frameNumber){
+
+        Canvas canvas = new Canvas( (int) this.height, (int) this.width, 255,255,255,255);
+        for(int i = 0; i < this.bodies.length; i ++){
+            canvas.drawSquare(5, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 0, 0, 0, 255);
+        }
+
+        File f = null;
+        try{
+            String frameNumberStr = String.valueOf(frameNumber);
+            frameNumberStr = frameNumberStr + ".png";
+            f = new File(frameNumberStr);
+            ImageIO.write(canvas.image, "png", f);
+        }catch(IOException e){
+            System.out.println("Error: " + e);
+        }
+    }
+
     public static void main(String args[]){
 
         Body testBody = new Body(2000000, 375, 375, 0, 0);
@@ -65,14 +87,16 @@ public class Space {
         bodies[3] = testBody4;
         bodies[4] = testBody5;
 
-        Space space = new Space(bodies, 750, 750, .02);
-
+        Space space = new Space(bodies, 750, 750, .5);
+        int counter = 0;
         while(true){
             space.updateForces();
             space.updateVelocities();
             space.updatePositions();
             //System.out.println(space);
-            space.draw();
+            //space.draw();
+            space.save(counter);
+            counter ++;
         }
         
     }
