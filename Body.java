@@ -2,7 +2,7 @@
 
 public class Body {
 
-    public static final double G = 6.673e-11;
+    public static final double G = 6.673e-5;
     private double mass;
     private double px;
     private double py;
@@ -50,33 +50,35 @@ public class Body {
         double m1 = this.getMass();
         double m2 = otherBody.getMass();
 
-        double force = G * ((m1 * m2) / distance);
+        double force = G * ((m1 * m2) / (distance * distance));
 
         return force;
+    }
+
+    public double getAngle(Body otherBody){
+
+        double delta_x = otherBody.getXpos() - this.getXpos();
+        double delta_y = otherBody.getYpos() - this.getYpos();
+        double theta_radians = Math.atan2(delta_y, delta_x);
+
+        return theta_radians;
     }
 
     public double getXforce(Body otherBody){
 
-        double distance = otherBody.getXpos() - this.getXpos();
-        double m1 = this.getMass();
-        double m2 = otherBody.getMass();
-
-        double force = G * ((m1 * m2) / distance);
-
-        return force;
-
+        double scalarForce = this.getForceScalar(otherBody);
+        double angleDegrees = this.getAngle(otherBody);
+        double returnDouble = scalarForce * Math.cos(angleDegrees);
+        return returnDouble;
 
     }
 
     public double getYforce(Body otherBody){
-        
-        double distance = otherBody.getYpos() - this.getYpos();
-        double m1 = this.getMass();
-        double m2 = otherBody.getMass();
 
-        double force = G * ((m1 * m2) / distance);
-
-        return force;
+        double scalarForce = this.getForceScalar(otherBody);
+        double angleDegrees = this.getAngle(otherBody);
+        double returnDouble = scalarForce * Math.sin(angleDegrees);
+        return returnDouble;
     }
 
     public void calcNetForce(Body[] bodies){
@@ -94,12 +96,15 @@ public class Body {
     }
 
     public void updateVelocity(double timeslice){
-        // TODO: Implament updateVelocity
-        
+
+        this.vx = this.vx + ((this.fx / this.mass) * timeslice);
+        this.vy = this.vy + ((this.fy / this.mass) * timeslice);
     }
 
     public void updatePosition(double timeslice){
-        // TODO: Implament updatePosition
+
+        this.px = this.px + (this.vx * timeslice);
+        this.py = this.py + (this.vy * timeslice);
 
     }
 

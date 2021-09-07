@@ -1,17 +1,21 @@
+import java.awt.image.*;
+
 public class Space {
 
-    Body[] bodies;
-    double height;
-    double width;
+    Body[] bodies;                  // List of body objects that make up the simulation
+    double height;                  // The height of the spacial region being simulated
+    double width;                   // The width of the spacial region being simulated
+    double timeslice;               // The time in sections between each tick of the simulation
 
-    public Space(Body[] bodies, double height, double width){
+    public Space(Body[] bodies, int height, int width, double timeslice){
 
         this.bodies = bodies;
         this.height = height;
         this.width = width;
+        this.timeslice = timeslice;
     }
 
-    public void calculateForces(){
+    public void updateForces(){
 
         //double runningTotal = 0;
         for(int i = 0; i < this.bodies.length; i ++){
@@ -19,32 +23,103 @@ public class Space {
         }
     }
 
+    public void updateVelocities(){
+        for(int i = 0; i < this.bodies.length; i ++){
+            this.bodies[i].updateVelocity(this.timeslice);
+        }
+    }
+
+    public void updatePositions(){
+        for(int i = 0; i < this.bodies.length; i ++){
+            this.bodies[i].updatePosition(this.timeslice);
+        }
+    }
+
+    public void draw(){
+
+        Canvas canvas = new Canvas( (int) this.height, (int) this.width, 255,255,255,255);
+        for(int i = 0; i < this.bodies.length; i ++){
+            // switch(i){
+            //     case 0: canvas.drawSquare(5, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 0, 0, 0, 255);
+            //     case 1: canvas.drawSquare(5, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 255, 0, 0, 255);
+            //     case 2: canvas.drawSquare(5, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 0, 0, 255, 255);
+            //     case 3: canvas.drawSquare(5, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 0, 255, 0, 255);
+            // }
+            canvas.drawSquare(5, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 0, 0, 0, 255);
+            
+        }
+        canvas.display();
+    }
+
     public static void main(String args[]){
 
-        Body testBody = new Body(15000, 0, 0, 10, 10);
-        Body testBody2 = new Body(27000, 2, 1, 10, 10);
-        Body testBody3 = new Body(29530, 4, 2, 10, 10);
-        Body testBody4 = new Body(29530000, -4, 4, 10, 10);
-        Body[] bodies = new Body[4];
+        Body testBody = new Body(2000000, 375, 375, 0, 0);
+        Body testBody2 = new Body(2, 500, 400, 0, -.5);
+        Body testBody3 = new Body(2, 200, 400, 0, .5);
+        Body testBody4 = new Body(2, 200, 500, .5, 0);
+        Body testBody5 = new Body(2, 200, 200, -.5, 0);
+        Body[] bodies = new Body[5];
         bodies[0] = testBody;
         bodies[1] = testBody2;
         bodies[2] = testBody3;
         bodies[3] = testBody4;
+        bodies[4] = testBody5;
 
-        Space space = new Space(bodies, 500, 500);
-        space.calculateForces();
+        Space space = new Space(bodies, 750, 750, .02);
 
-        System.out.println(space.bodies[0].getNetXforce());
-        System.out.println(space.bodies[0].getNetYforce());
+        while(true){
+            space.updateForces();
+            space.updateVelocities();
+            space.updatePositions();
+            //System.out.println(space);
+            space.draw();
+        }
+        
+    }
 
-        System.out.println(space.bodies[1].getNetXforce());
-        System.out.println(space.bodies[1].getNetYforce());
+    @Override
+    public String toString() {
+        String returnString = String.format("Width: " + this.width + " Height: " + this.height + "\n\n\n");
+        for(int i = 0; i < this.bodies.length; i ++){
+            int b = i +1;
+            returnString += String.format("Body #" + b + "\n\n");
+            returnString += String.format("Position: X = " + this.bodies[i].getXpos() + " ");
+            returnString += String.format("Position: Y = " + this.bodies[i].getYpos() + "\n");
+            returnString += String.format("Velosity: X = " + this.bodies[i].getXvelo() + " ");
+            returnString += String.format("Velosity: Y = " + this.bodies[i].getYvelo() + "\n\n");
 
-        System.out.println(space.bodies[2].getNetXforce());
-        System.out.println(space.bodies[2].getNetYforce());
+        }
 
-        System.out.println(space.bodies[3].getNetXforce());
-        System.out.println(space.bodies[3].getNetYforce());
+        return returnString;
 
     }
 }
+
+
+
+
+// public BufferedImage generateImage(){
+
+    //     BufferedImage img = new BufferedImage((int)this.height, (int)this.width, BufferedImage.TYPE_INT_ARGB);
+
+    //     for(int y = 0; y < this.height; y ++){
+    //         for (int x = 0; x < this.width; x ++){
+    //             for (int body = 0; body < this.bodies.length; body ++){
+    //                 if((int)this.bodies[body].getXpos() == x){
+    //                     if((int) this.bodies[body].getYpos() == y){
+    //                         int a = 255;
+    //                         int r = 0;
+    //                         int g = 0;
+    //                         int b = 0;
+
+    //                         int p = (a<<24) | (r<<16) | (g<<8) | b;
+
+    //                         img.setRGB(x, y, p);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     return img;
+    // }
