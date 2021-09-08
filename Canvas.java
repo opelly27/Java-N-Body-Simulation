@@ -55,6 +55,9 @@ public class Canvas {
     }
 
     public void drawSquare(int radius, int x, int y, int r, int g, int b, int a){
+        if(x > this.height -15 || x < 15 || y > this.width - 15 || y < 15){
+            return;
+        }
         for(int sign = 0; sign < 4; sign ++){
             for(int offsetY = 0; offsetY < radius; offsetY ++){
                 for(int offsetX = 0; offsetX < radius; offsetX ++ ){
