@@ -8,9 +8,9 @@ import java.awt.Graphics2D;
 // ffmpeg -framerate 60 -start_number 1 -i %00d.png -pix_fmt yuv420p out.mp4
 
 // TODO Add circle render method
-// TODO Fix random generation of bodies
+
 // TODO Find good timeslice for annimation
-// TODO add out of bounds check to setPixel method
+
 
 
 public class Space {
@@ -69,11 +69,20 @@ public class Space {
         Canvas canvas = new Canvas( (int) this.height, (int) this.width, 255,255,255,255);
         for(int i = 0; i < this.bodies.length; i ++){
             if(i ==0){
-                canvas.drawSquare(10, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 255, 255, 255, 255);
+                canvas.drawCircle(10, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 255, 255, 255, 255);
             }
             else{
-                canvas.drawSquare(2, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 255, 255, 255, 255);
+                int r = this.bodies[i].getR();
+                int g = this.bodies[i].getG();
+                int b = this.bodies[i].getB();
+                int x = (int) (this.bodies[i].getXpos());
+                int y = (int) (this.bodies[i].getYpos());
+                
+                canvas.drawSquare(5,x, y, r, g, b, 255);
             }
+            
+                
+            
             
         }
 
@@ -90,26 +99,34 @@ public class Space {
 
     public static void main(String args[]){
 
-         Body[] bodies = new Body[1000];
-         bodies[0] = new Body(2000000, 540, 360, 0, 0);
-        // bodies[1] = new Body(2, 500, 400, 0, -.5);
-        // bodies[2] = new Body(2, 200, 400, 0, .5);
-        // bodies[3] = new Body(2, 200, 500, .5, 0);
-        // bodies[4] = new Body(2, 200, 200, -.5, 0);
-        // bodies[5] = new Body(2, 150, 150, -.5, .2);
-        // bodies[6] = new Body(2, 300, 300, -.5, 0);
-        // bodies[7] = new Body(2, 450, 450, -.5, -.3);
-        // bodies[8] = new Body(2, 225, 556, -.5, -.5);
+        Body[] bodies = new Body[14];
+        bodies[0] = new Body(20000000, 960, 540, 0, 0);
+        bodies[1] = new Body(2, 960, 520, .5, .0);
+        bodies[2] = new Body(2, 960, 240, -.5, 0);
+        bodies[3] = new Body(2, 200, 540, 0, .5);
+        bodies[4] = new Body(2, 750, 540, 0, -.5);
 
-        for(int i = 1; i < 1000; i ++){
+        bodies[5] = new Body(2, 700, 540, 0, -.5);
+        bodies[6] = new Body(2, 640, 540, 0, -.5);
+        bodies[7] = new Body(2, 800, 540, 0, -.5);
+        bodies[8] = new Body(2, 100, 540, 0, -.5);
+        bodies[9] = new Body(2, 50, 540, 0, -.5);
+        bodies[10] = new Body(2, 960, 100, -.5, 0);
+        bodies[11] = new Body(2, 960, 300, -.5, 0);
+        bodies[12] = new Body(2, 960, 800, -.5, 0);
+        bodies[13] = new Body(2, 960, 600, -.5, 0);
 
-            bodies[i] = new Body(2, Math.random() * 800, Math.random() * 650, Math.random() - 1, Math.random() -1);
+    
 
-        }
+        // for(int i = 1; i < 1000; i ++){
 
-        Space space = new Space(bodies, 1080, 720, 3);
+        //     bodies[i] = new Body(2, Math.random() * 1080, Math.random() * 720, Math.random() -.5, Math.random() -.5);
+
+        // }
+
+        Space space = new Space(bodies, 1920, 1080, 1);
         int counter = 0;
-        for(int i = 0; i < 5000; i ++){
+        for(int i = 0; i < 50000000; i ++){
             space.updateForces();
             space.updateVelocities();
             space.updatePositions();

@@ -2,7 +2,7 @@
 
 public class Body {
 
-    public static final double G = 6.673e-5;
+    public static final double G = 6.673e-6;
     private double mass;
     private double px;
     private double py;
@@ -10,6 +10,10 @@ public class Body {
     private double vy;
     private double fx;
     private double fy;
+    private int a;
+    private int r;
+    private int g;
+    private int b;
 
     public Body(double mass, double px, double py, double vx, double vy){
         this.px = px;
@@ -17,6 +21,12 @@ public class Body {
         this.vx = vx;
         this.vy = vy;
         this.mass = mass;
+
+        this.a = 255;
+        this.r = (int) (Math.random() * 255);
+        this.g = (int) (Math.random() * 255);
+        this.b = (int) (Math.random() * 255);
+
     }
 
 
@@ -134,6 +144,18 @@ public class Body {
 
     public double getNetYforce(){
         return this.fy;
+    }
+    public int getA(){
+        return this.a;
+    }
+    public int getR(){
+        return this.r;
+    }
+    public int getG(){
+        return this.g;
+    }
+    public int getB(){
+        return this.b;
     }
 
     public static void main(String[] args){
