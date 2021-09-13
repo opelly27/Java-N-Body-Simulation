@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 // ffmpeg -framerate 60 -i %00d.png -c:v -vf format=yuv420p libx264 output.mp4 
 // ffmpeg -framerate 60 -start_number 1 -i %00d.png -pix_fmt yuv420p out.mp4
 
-// TODO Add circle render method
+// TODO Add filled circle render method
 
 // TODO Find good timeslice for annimation
 
@@ -69,7 +69,7 @@ public class Space {
         Canvas canvas = new Canvas( (int) this.height, (int) this.width, 255,255,255,255);
         for(int i = 0; i < this.bodies.length; i ++){
             if(i ==0){
-                canvas.drawCircle(10, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 255, 255, 255, 255);
+                canvas.drawCircle(20, (int) this.bodies[i].getXpos(), (int) this.bodies[i].getYpos(), 255, 255, 255, 255);
             }
             else{
                 int r = this.bodies[i].getR();
@@ -77,13 +77,8 @@ public class Space {
                 int b = this.bodies[i].getB();
                 int x = (int) (this.bodies[i].getXpos());
                 int y = (int) (this.bodies[i].getYpos());
-                
-                canvas.drawSquare(5,x, y, r, g, b, 255);
+                canvas.drawSquare(10,x, y, r, g, b, 255);
             }
-            
-                
-            
-            
         }
 
         File f = null;
@@ -99,22 +94,22 @@ public class Space {
 
     public static void main(String args[]){
 
-        Body[] bodies = new Body[14];
+        Body[] bodies = new Body[5];
         bodies[0] = new Body(20000000, 960, 540, 0, 0);
-        bodies[1] = new Body(2, 960, 520, .5, .0);
-        bodies[2] = new Body(2, 960, 240, -.5, 0);
-        bodies[3] = new Body(2, 200, 540, 0, .5);
-        bodies[4] = new Body(2, 750, 540, 0, -.5);
+        bodies[1] = new Body(2, 960, 520, .5, -.3);
+        bodies[2] = new Body(2, 960, 240, -.5, .03);
+        bodies[3] = new Body(2, 200, 540, .2, .5);
+        bodies[4] = new Body(2, 750, 540, .1, -.5);
 
-        bodies[5] = new Body(2, 700, 540, 0, -.5);
-        bodies[6] = new Body(2, 640, 540, 0, -.5);
-        bodies[7] = new Body(2, 800, 540, 0, -.5);
-        bodies[8] = new Body(2, 100, 540, 0, -.5);
-        bodies[9] = new Body(2, 50, 540, 0, -.5);
-        bodies[10] = new Body(2, 960, 100, -.5, 0);
-        bodies[11] = new Body(2, 960, 300, -.5, 0);
-        bodies[12] = new Body(2, 960, 800, -.5, 0);
-        bodies[13] = new Body(2, 960, 600, -.5, 0);
+        // bodies[5] = new Body(2, 700, 540, 0, -.5);
+        // bodies[6] = new Body(2, 640, 540, 0, -.5);
+        // bodies[7] = new Body(2, 800, 540, 0, -.5);
+        // bodies[8] = new Body(2, 100, 540, 0, -.5);
+        // bodies[9] = new Body(2, 50, 540, 0, -.5);
+        // bodies[10] = new Body(2, 960, 100, -.5, 0);
+        // bodies[11] = new Body(2, 960, 300, -.5, 0);
+        // bodies[12] = new Body(2, 960, 800, -.5, 0);
+        // bodies[13] = new Body(2, 960, 600, -.5, 0);
 
     
 
@@ -131,9 +126,9 @@ public class Space {
             space.updateVelocities();
             space.updatePositions();
             //System.out.println(space);
-            //space.draw();
-            space.save(counter);
-            System.out.println(counter);
+            space.draw();
+            //space.save(counter);
+            //System.out.println(counter);
             counter ++;
         }
         

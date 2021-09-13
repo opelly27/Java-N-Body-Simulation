@@ -5,9 +5,12 @@ import javax.swing.*;
 public class Test {
     public static void main(String[] args){
 
-        for(int i = 0; i < 30; i ++){
-            display(resize(getRandomFrame(),500,500));
-        }
+        System.out.println(Long.toBinaryString(Double.doubleToRawLongBits(1.1)));
+        
+        // int i = 100;
+        // i = i << 4;
+        // String binaryString = Integer.toString(i, 2);
+        // System.out.println(binaryString);
 
         
     }
