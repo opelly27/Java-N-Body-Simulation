@@ -126,7 +126,7 @@ public class Space {
             space.updateVelocities();
             space.updatePositions();
             //System.out.println(space);
-            space.draw();
+            space.save(i);
             //space.save(counter);
             //System.out.println(counter);
             counter ++;
